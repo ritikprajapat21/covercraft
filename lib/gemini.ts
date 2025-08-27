@@ -32,6 +32,7 @@ export const generateCoverLetter = async (
     },
     inputs: {
       resume: resumeContent,
+      date: new Date(),
       job_description: jobDescription,
     },
     style: {

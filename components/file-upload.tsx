@@ -75,7 +75,8 @@ export function FileUpload() {
                 {currentResume.filename}
               </p>
               <p className="text-sm text-green-700">
-                Uploaded {currentResume.uploadedAt}
+                Uploaded on{" "}
+                {new Date(currentResume.uploadedAt).toLocaleDateString("en-GB")}
               </p>
             </div>
           </div>
@@ -152,4 +153,3 @@ export function FileUpload() {
     </div>
   );
 }
-

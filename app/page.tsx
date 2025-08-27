@@ -3,6 +3,7 @@
 import {
   Crown,
   FileText,
+  LoaderCircle,
   Mail,
   Sparkles,
   Target,
@@ -283,7 +284,7 @@ export default function HomePage() {
               >
                 {isGenerating && activeType === "cover-letter" ? (
                   <>
-                    <Sparkles className="w-4 h-4 mr-2 animate-spin" />
+                    <LoaderCircle className="w-4 h-4 mr-2 animate-spin" />
                     Generating...
                   </>
                 ) : (
