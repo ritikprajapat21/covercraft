@@ -1,6 +1,7 @@
 "use client";
 
 import { FileText } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import type { BuiltInProviderType } from "next-auth/providers/index";
 import {
   type ClientSafeProvider,
@@ -17,9 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useSearchParams } from "next/navigation";
 
-// Handle error params
 export default function SignInPage() {
   const [providers, setProviders] = useState<Record<
     LiteralUnion<BuiltInProviderType, string>,

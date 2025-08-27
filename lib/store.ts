@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface Resume {
   id: string;
@@ -10,7 +10,7 @@ interface Resume {
 
 interface Document {
   id: string;
-  type: 'cover_letter' | 'cold_email';
+  type: "cover_letter" | "cold_email";
   title: string;
   content: string;
   jobDescription: string;
@@ -25,7 +25,7 @@ interface AppState {
   currentDocument: Document | null;
   documents: Document[];
   isGenerating: boolean;
-  
+
   // Actions
   setUser: (user: any) => void;
   setCurrentResume: (resume: Resume | null) => void;
@@ -37,32 +37,35 @@ interface AppState {
 
 export const useAppStore = create<AppState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       user: null,
       currentResume: null,
       currentDocument: null,
       documents: [],
       isGenerating: false,
-      
+
       setUser: (user) => set({ user }),
       setCurrentResume: (resume) => set({ currentResume: resume }),
       setCurrentDocument: (document) => set({ currentDocument: document }),
-      addDocument: (document) => set((state) => ({ 
-        documents: [...state.documents, document] 
-      })),
-      updateDocument: (id, updates) => set((state) => ({
-        documents: state.documents.map(doc => 
-          doc.id === id ? { ...doc, ...updates } : doc
-        )
-      })),
+      addDocument: (document) =>
+        set((state) => ({
+          documents: [...state.documents, document],
+        })),
+      updateDocument: (id, updates) =>
+        set((state) => ({
+          documents: state.documents.map((doc) =>
+            doc.id === id ? { ...doc, ...updates } : doc,
+          ),
+        })),
       setIsGenerating: (isGenerating) => set({ isGenerating }),
     }),
     {
-      name: 'cover-letter-app',
+      name: "cover-letter-app",
       partialize: (state) => ({
         currentResume: state.currentResume,
         documents: state.documents,
       }),
-    }
-  )
+    },
+  ),
 );
+
