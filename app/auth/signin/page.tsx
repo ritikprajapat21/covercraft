@@ -17,6 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useSearchParams } from "next/navigation";
 
 // Handle error params
 export default function SignInPage() {
@@ -24,6 +25,9 @@ export default function SignInPage() {
     LiteralUnion<BuiltInProviderType, string>,
     ClientSafeProvider
   > | null>(null);
+
+  const search = useSearchParams();
+  const error = search.get("error");
 
   useEffect(() => {
     const fetchProviders = async () => {
@@ -54,6 +58,11 @@ export default function SignInPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
+            {error && (
+              <div className="text-destructive border-l-2 border-destructive px-4 mb-4">
+                Having some trouble signin now. Try again later.
+              </div>
+            )}
             {providers && (
               <div className="space-y-4">
                 {Object.values(providers).map((provider) => (
