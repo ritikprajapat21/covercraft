@@ -2,26 +2,27 @@ import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
-// FIX: Response for all the function is in json format. Write prompt so that it returns only markdown
+// Updated the prompt
 export const generateCoverLetter = async (
   jobDescription: string,
-  resumeContent: string,
+  resumeContent: string | { text: string; links: string[] },
 ) => {
   const model = genAI.getGenerativeModel({
     model: "gemini-2.5-flash",
-    generationConfig: {
-      responseMimeType: "application/json",
-      responseSchema: {
-        type: SchemaType.OBJECT,
-        properties: {
-          coverLetter: {
-            type: SchemaType.STRING,
-            description: "The generated cover letter in markdown format.",
-          },
-        },
-        required: ["coverLetter"],
-      },
-    },
+    // May need in future so commenting it
+    // generationConfig: {
+    //   responseMimeType: "application/json",
+    //   responseSchema: {
+    //     type: SchemaType.OBJECT,
+    //     properties: {
+    //       coverLetter: {
+    //         type: SchemaType.STRING,
+    //         description: "The generated cover letter in markdown format.",
+    //       },
+    //     },
+    //     required: ["coverLetter"],
+    //   },
+    // },
   });
 
   const prompt = {
@@ -46,7 +47,7 @@ export const generateCoverLetter = async (
       "Each body paragraph should emphasize one or two key skills or achievements.",
       "Be specific and show proof (metrics, technologies, outcomes).",
       "Keep it concise: 3–4 paragraphs max.",
-      "final_text should contain the fully formatted cover letter.",
+      "Response should contain the fully formatted cover letter in markdown with the links.",
     ],
   };
 
@@ -58,23 +59,10 @@ export const generateCoverLetter = async (
 
 export const generateColdEmail = async (
   companyDescription: string,
-  resumeContent: string,
+  resumeContent: string | { text: string; links: string[] },
 ) => {
   const model = genAI.getGenerativeModel({
     model: "gemini-2.5-flash",
-    generationConfig: {
-      responseMimeType: "application/json",
-      responseSchema: {
-        type: SchemaType.OBJECT,
-        properties: {
-          coldEmail: {
-            type: SchemaType.STRING,
-            description: "The generated cold email in markdown format.",
-          },
-        },
-        required: ["coldEmail"],
-      },
-    },
   });
 
   const prompt = {
@@ -100,6 +88,8 @@ export const generateColdEmail = async (
       "Highlight 1–2 achievements or skills from resume relevant to the company.",
       "Keep it concise: 120–180 words total.",
       "End with a clear call to action (suggest a quick intro call, sharing portfolio, etc.).",
+      "Response should contain the fully formatted email in markdown with the links.",
+      "Response should contain Subject line that can be copied and content that can be copied separately.",
     ],
   };
 
