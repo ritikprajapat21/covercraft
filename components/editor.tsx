@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState, useCallback } from 'react';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { toast } from 'sonner';
-import { Copy, Download, Mail, Edit3, Eye } from 'lucide-react';
+import { Copy, Download, Edit3 } from "lucide-react";
+import { useCallback, useState } from "react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 interface EditorProps {
   content: string;
@@ -18,16 +18,16 @@ export function Editor({ content, onContentChange }: EditorProps) {
   const handleCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(content);
-      toast.success('Content copied to clipboard!');
+      toast.success("Content copied to clipboard!");
     } catch (error) {
-      toast.error('Failed to copy content');
+      toast.error("Failed to copy content");
     }
   }, [content]);
 
   const handleSave = useCallback(() => {
     onContentChange(editContent);
     setIsEditing(false);
-    toast.success('Content updated!');
+    toast.success("Content updated!");
   }, [editContent, onContentChange]);
 
   const handleCancel = useCallback(() => {
@@ -36,16 +36,16 @@ export function Editor({ content, onContentChange }: EditorProps) {
   }, [content]);
 
   const handleDownload = useCallback(() => {
-    const blob = new Blob([content], { type: 'text/plain' });
+    const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'cover-letter.txt';
+    a.download = "cover-letter.txt";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    toast.success('Content downloaded!');
+    toast.success("Content downloaded!");
   }, [content]);
 
   if (!content) {
@@ -105,11 +105,7 @@ export function Editor({ content, onContentChange }: EditorProps) {
             >
               Save Changes
             </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleCancel}
-            >
+            <Button variant="outline" size="sm" onClick={handleCancel}>
               Cancel
             </Button>
           </>
@@ -137,9 +133,12 @@ export function Editor({ content, onContentChange }: EditorProps) {
       {/* Content Stats */}
       <div className="flex items-center gap-4 text-xs text-gray-500 pt-2 border-t">
         <span>Characters: {content.length}</span>
-        <span>Words: {content.split(/\s+/).filter(word => word.length > 0).length}</span>
-        <span>Lines: {content.split('\n').length}</span>
+        <span>
+          Words: {content.split(/\s+/).filter((word) => word.length > 0).length}
+        </span>
+        <span>Lines: {content.split("\n").length}</span>
       </div>
     </div>
   );
 }
+

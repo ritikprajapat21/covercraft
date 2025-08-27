@@ -1,7 +1,9 @@
 "use client";
 import mammoth from "mammoth";
 
-export const extractTextFromPDF = async (file: File): Promise<string> => {
+export const extractTextFromPDF = async (
+  file: File,
+): Promise<{ text: string; links: string[] }> => {
   const pdfjsLib = await import("pdfjs-dist");
 
   pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
@@ -13,6 +15,7 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
   const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
 
   let text = "";
+  const links: string[] = [];
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
     const content = await page.getTextContent();
@@ -21,9 +24,16 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
       .map((item) => item.str)
       .join(" ");
     text += `${pageText}\n`;
+
+    const annotations = await page.getAnnotations();
+    annotations.forEach((a) => {
+      if (a.subtype === "Link" && a.url) {
+        links.push(a.url);
+      }
+    });
   }
 
-  return text.trim();
+  return { text: text.trim(), links };
 };
 
 export const extractTextFromDOCX = async (file: File): Promise<string> => {
@@ -32,7 +42,9 @@ export const extractTextFromDOCX = async (file: File): Promise<string> => {
   return result.value;
 };
 
-export const extractTextFromFile = async (file: File): Promise<string> => {
+export const extractTextFromFile = async (
+  file: File,
+): Promise<string | { text: string; links: string[] }> => {
   const fileType = file.type;
 
   if (fileType === "application/pdf") {

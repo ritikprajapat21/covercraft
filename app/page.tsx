@@ -28,6 +28,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useAppStore } from "@/lib/store";
 
+// FIX: Convert following page in parts so that it rendered correctly if user is signed in.
 export default function HomePage() {
   const { data: session } = useSession();
   const { currentResume, isGenerating, setIsGenerating } = useAppStore();
@@ -305,7 +306,7 @@ export default function HomePage() {
               >
                 {isGenerating && activeType === "cold-email" ? (
                   <>
-                    <Sparkles className="w-4 h-4 mr-2 animate-spin" />
+                    <LoaderCircle className="w-4 h-4 mr-2 animate-spin" />
                     Generating...
                   </>
                 ) : (

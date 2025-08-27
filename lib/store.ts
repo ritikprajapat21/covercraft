@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 interface Resume {
   id: string;
   filename: string;
-  content: string;
+  content: string | { text: string; links: string[] };
   uploadedAt: Date;
 }
 
@@ -68,4 +68,3 @@ export const useAppStore = create<AppState>()(
     },
   ),
 );
-

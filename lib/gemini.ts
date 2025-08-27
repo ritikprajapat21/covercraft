@@ -2,6 +2,7 @@ import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
+// FIX: Response for all the function is in json format. Write prompt so that it returns only markdown
 export const generateCoverLetter = async (
   jobDescription: string,
   resumeContent: string,
@@ -105,6 +106,7 @@ export const generateColdEmail = async (
   const result = await model.generateContent(JSON.stringify(prompt));
   const response = result.response.text();
 
+  console.log(JSON.parse(response));
   return JSON.parse(response).coldEmail;
 };
 

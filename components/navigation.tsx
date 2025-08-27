@@ -25,6 +25,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+//FIX: Create a settings page. It is not present
 export function Navigation() {
   const { data: session } = useSession();
   const { setTheme, theme } = useTheme();
