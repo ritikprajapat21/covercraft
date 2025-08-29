@@ -1,8 +1,8 @@
 import { Crown, FileText, Sparkles, Target, Users, Zap } from "lucide-react";
 import Link from "next/link";
 import { auth } from "@/auth";
-import { Button } from "@/components/ui/button";
 import Features from "@/components/features";
+import { Button } from "@/components/ui/button";
 
 export default async function HomePage() {
   const session = await auth();
@@ -56,8 +56,7 @@ export default async function HomePage() {
               </div>
 
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                No credit card required • 5 free generations • Sign up with
-                Google
+                5 free generations • Sign up with Google
               </p>
             </div>
           </div>
