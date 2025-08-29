@@ -1,4 +1,5 @@
 "use client";
+// No need for now. I think!!
 
 import {
   CreditCard,
@@ -34,60 +35,14 @@ import { useAppStore } from "@/lib/store";
 export default function SettingsPage() {
   const { data: session } = useSession();
   const user = useAppStore((state) => state.user);
+  const setUser = useAppStore((s) => s.setUser);
   const { theme, setTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
-  // const [settings, setSettings] = useState({
-  //   emailNotifications: true,
-  //   marketingEmails: false,
-  //   autoSave: true,
-  //   gmailConnected: false,
-  //   twoFactorEnabled: false,
-  // });
 
-  // const handleSaveSettings = async () => {
-  //   setIsLoading(true);
-  //   try {
-  //     // Simulate API call
-  //     await new Promise((resolve) => setTimeout(resolve, 1000));
-  //     toast.success("Settings saved successfully!");
-  //   } catch (_error) {
-  //     toast.error("Failed to save settings");
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
-  const handleNameChange = () => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
+    setUser({ name: e.target.value });
   };
-
-  // const handleConnectGmail = async () => {
-  //   try {
-  //     // This would integrate with Gmail API OAuth
-  //     toast.success("Gmail connected successfully!");
-  //     setSettings((prev) => ({ ...prev, gmailConnected: true }));
-  //   } catch (_error) {
-  //     toast.error("Failed to connect Gmail");
-  //   }
-  // };
-  //
-  // const handleDisconnectGmail = async () => {
-  //   try {
-  //     toast.success("Gmail disconnected");
-  //     setSettings((prev) => ({ ...prev, gmailConnected: false }));
-  //   } catch (_error) {
-  //     toast.error("Failed to disconnect Gmail");
-  //   }
-  // };
-  //
-  // const handleExportData = async () => {
-  //   try {
-  //     // This would export user data
-  //     toast.success("Data export started. You'll receive an email when ready.");
-  //   } catch (_error) {
-  //     toast.error("Failed to export data");
-  //   }
-  // };
 
   const handleDeleteAccount = async () => {
     if (
@@ -151,13 +106,13 @@ export default function SettingsPage() {
                     alt={session.user?.name || ""}
                   />
                   <AvatarFallback className="text-lg">
-                    {session.user?.name?.charAt(0) || "U"}
+                    {user?.name?.charAt(0) || "U"}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                      {session.user?.name}
+                      {user?.name}
                     </h3>
                     <Badge
                       variant="secondary"
@@ -167,7 +122,7 @@ export default function SettingsPage() {
                     </Badge>
                   </div>
                   <p className="text-gray-600 dark:text-gray-300">
-                    {session.user?.email}
+                    {user?.email}
                   </p>
                 </div>
               </div>
@@ -177,7 +132,8 @@ export default function SettingsPage() {
                   <Label htmlFor="name">Full Name</Label>
                   <Input
                     id="name"
-                    defaultValue={session.user?.name || ""}
+                    defaultValue={user?.name || ""}
+                    onChange={handleNameChange}
                     className="mt-1"
                   />
                 </div>

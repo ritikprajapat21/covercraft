@@ -6,7 +6,6 @@ import {
   LogOut,
   Menu,
   Moon,
-  Settings,
   Sun,
   User,
   X,
@@ -31,9 +30,12 @@ export function Navigation() {
   const { setTheme, theme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const setUser = useAppStore((s) => s.setUser);
+  const user = useAppStore((s) => s.user);
 
   useEffect(() => {
-    setUser(session?.user);
+    if (session?.user) {
+      setUser(session.user);
+    }
   }, [session?.user, setUser]);
 
   const navItems = [
@@ -101,12 +103,10 @@ export function Navigation() {
                 <DropdownMenuContent className="w-56" align="end" forceMount>
                   <div className="flex items-center justify-start gap-2 p-2">
                     <div className="flex flex-col space-y-1 leading-none">
-                      {session.user?.name && (
-                        <p className="font-medium">{session.user.name}</p>
-                      )}
-                      {session.user?.email && (
+                      {user?.name && <p className="font-medium">{user.name}</p>}
+                      {user?.email && (
                         <p className="w-[200px] truncate text-sm text-muted-foreground">
-                          {session.user.email}
+                          {user.email}
                         </p>
                       )}
                     </div>
@@ -124,12 +124,12 @@ export function Navigation() {
                       Upgrade to Pro
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/settings" className="flex items-center">
-                      <Settings className="mr-2 h-4 w-4" />
-                      Settings
-                    </Link>
-                  </DropdownMenuItem>
+                  {/* <DropdownMenuItem asChild> */}
+                  {/*   <Link href="/settings" className="flex items-center"> */}
+                  {/*     <Settings className="mr-2 h-4 w-4" /> */}
+                  {/*     Settings */}
+                  {/*   </Link> */}
+                  {/* </DropdownMenuItem> */}
                   <DropdownMenuItem
                     onClick={() =>
                       setTheme(theme === "dark" ? "light" : "dark")
