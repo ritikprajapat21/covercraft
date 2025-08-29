@@ -90,17 +90,17 @@ export function FileUpload() {
           </Button>
         </div>
 
-        <div className="p-4 bg-gray-50 dark:bg-background rounded-lg">
-          <p className="text-sm text-gray-600 dark:text-foreground mb-2">
-            Resume Preview:
-          </p>
-          <p className="text-sm text-gray-800 dark:text-muted-foreground line-clamp-3">
-            {typeof currentResume.content === "string"
-              ? currentResume.content.substring(0, 200)
-              : currentResume.content.text.substring(0, 200)}
-            ...
-          </p>
-        </div>
+        {/* <div className="p-4 bg-gray-50 dark:bg-background rounded-lg"> */}
+        {/*   <p className="text-sm text-gray-600 dark:text-foreground mb-2"> */}
+        {/*     Resume Preview: */}
+        {/*   </p> */}
+        {/*   <p className="text-sm text-gray-800 dark:text-muted-foreground line-clamp-3"> */}
+        {/*     {typeof currentResume.content === "string" */}
+        {/*       ? currentResume.content.substring(0, 200) */}
+        {/*       : currentResume.content.text.substring(0, 200)} */}
+        {/*     ... */}
+        {/*   </p> */}
+        {/* </div> */}
       </div>
     );
   }

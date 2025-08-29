@@ -133,7 +133,7 @@ export default function Features() {
                 disabled={
                   isGenerating || !currentResume || !jobDescription.trim()
                 }
-                className="h-12 bg-blue-600 hover:bg-blue-700 shadow-sm hover:shadow-md transition-all duration-200"
+                className="h-12 bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 shadow-sm hover:shadow-md transition-all duration-200"
               >
                 {isGenerating && activeType === "cover-letter" ? (
                   <>
