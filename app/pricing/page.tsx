@@ -15,13 +15,13 @@ export default function PricingPage() {
   const plans = [
     {
       name: "Free",
-      price: "$0",
+      price: "0",
       period: "forever",
       description: "Perfect for getting started",
       features: [
         "5 generations per month",
         "Cover letter & cold email generation",
-        "Basic AI chat refinement",
+        // "Basic AI chat refinement",
         "Text editing & copy tools",
         "Resume upload & parsing",
       ],
@@ -37,12 +37,12 @@ export default function PricingPage() {
     },
     {
       name: "Pro",
-      price: "$9",
+      price: "99",
       period: "month",
       description: "Everything you need to land your dream job",
       features: [
         "Unlimited generations",
-        "Advanced AI chat refinement",
+        "AI chat refinement",
         "Direct Gmail integration",
         "PDF download & export",
         "Premium templates",
@@ -80,7 +80,7 @@ export default function PricingPage() {
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                   <Badge className="bg-blue-600 dark:bg-blue-500 text-white px-4 py-1">
                     <Star className="w-4 h-4 mr-1" />
-                    Most Popular
+                    Recommended
                   </Badge>
                 </div>
               )}
@@ -91,6 +91,7 @@ export default function PricingPage() {
                 </CardTitle>
                 <div className="mt-4">
                   <span className="text-4xl font-bold dark:text-white">
+                    <span>&#8377;</span>
                     {plan.price}
                   </span>
                   {plan.period !== "contact us" && <span>/{plan.period}</span>}
@@ -178,9 +179,7 @@ export default function PricingPage() {
                     <td className="py-4 text-gray-700 dark:text-gray-300">
                       AI chat refinement
                     </td>
-                    <td className="text-center py-4">
-                      <Check className="w-4 h-4 text-green-500 dark:text-green-400 mx-auto" />
-                    </td>
+                    <td className="text-center py-4">-</td>
                     <td className="text-center py-4">
                       <Check className="w-4 h-4 text-green-500 dark:text-green-400 mx-auto" />
                     </td>

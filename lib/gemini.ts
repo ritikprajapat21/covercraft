@@ -54,7 +54,8 @@ export const generateCoverLetter = async (
   const result = await model.generateContent(JSON.stringify(prompt));
   const response = result.response.text();
 
-  return JSON.parse(response).coverLetter;
+  return response;
+  // return JSON.parse(response).coverLetter;
 };
 
 export const generateColdEmail = async (

@@ -11,6 +11,7 @@ interface EditorProps {
   onContentChange: (content: string) => void;
 }
 
+// FEAT: Add markdown, download to pdf feature
 export function Editor({ content, onContentChange }: EditorProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(content);
