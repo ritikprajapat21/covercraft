@@ -1,3 +1,4 @@
+import type { User } from "next-auth";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -20,14 +21,14 @@ interface Document {
 }
 
 interface AppState {
-  user: any;
+  user: User | null | undefined;
   currentResume: Resume | null;
   currentDocument: Document | null;
   documents: Document[];
   isGenerating: boolean;
 
   // Actions
-  setUser: (user: any) => void;
+  setUser: (user: User) => void;
   setCurrentResume: (resume: Resume | null) => void;
   setCurrentDocument: (document: Document | null) => void;
   addDocument: (document: Document) => void;

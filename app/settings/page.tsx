@@ -28,9 +28,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAppStore } from "@/lib/store";
 
+// FIX: Add change name feature
 export default function SettingsPage() {
   const { data: session } = useSession();
+  const user = useAppStore((state) => state.user);
   const { theme, setTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   // const [settings, setSettings] = useState({
@@ -41,17 +44,21 @@ export default function SettingsPage() {
   //   twoFactorEnabled: false,
   // });
 
-  const handleSaveSettings = async () => {
+  // const handleSaveSettings = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     // Simulate API call
+  //     await new Promise((resolve) => setTimeout(resolve, 1000));
+  //     toast.success("Settings saved successfully!");
+  //   } catch (_error) {
+  //     toast.error("Failed to save settings");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  const handleNameChange = () => {
     setIsLoading(true);
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      toast.success("Settings saved successfully!");
-    } catch (_error) {
-      toast.error("Failed to save settings");
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   // const handleConnectGmail = async () => {
@@ -165,7 +172,7 @@ export default function SettingsPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="name">Full Name</Label>
                   <Input
@@ -184,7 +191,26 @@ export default function SettingsPage() {
                     disabled
                   />
                 </div>
-              </div>
+                <div className="flex justify-end md:col-span-2">
+                  <Button
+                    onClick={handleNameChange}
+                    disabled={isLoading}
+                    size="lg"
+                  >
+                    {isLoading ? (
+                      <>
+                        <div className="w-4 h-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                        Saving...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="w-4 h-4 mr-2" />
+                        Save Settings
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </form>
             </CardContent>
           </Card>
 
@@ -448,21 +474,21 @@ export default function SettingsPage() {
           </Card>
 
           {/* Save Button */}
-          <div className="flex justify-end">
-            <Button onClick={handleSaveSettings} disabled={isLoading} size="lg">
-              {isLoading ? (
-                <>
-                  <div className="w-4 h-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <Save className="w-4 h-4 mr-2" />
-                  Save Settings
-                </>
-              )}
-            </Button>
-          </div>
+          {/* <div className="flex justify-end"> */}
+          {/*   <Button onClick={handleSaveSettings} disabled={isLoading} size="lg"> */}
+          {/*     {isLoading ? ( */}
+          {/*       <> */}
+          {/*         <div className="w-4 h-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent" /> */}
+          {/*         Saving... */}
+          {/*       </> */}
+          {/*     ) : ( */}
+          {/*       <> */}
+          {/*         <Save className="w-4 h-4 mr-2" /> */}
+          {/*         Save Settings */}
+          {/*       </> */}
+          {/*     )} */}
+          {/*   </Button> */}
+          {/* </div> */}
         </div>
       </div>
     </div>

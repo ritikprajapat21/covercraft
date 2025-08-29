@@ -2,13 +2,8 @@
 
 import { FileText } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import type { BuiltInProviderType } from "next-auth/providers/index";
-import {
-  type ClientSafeProvider,
-  getProviders,
-  type LiteralUnion,
-  signIn,
-} from "next-auth/react";
+import type { ProviderId } from "next-auth/providers/index";
+import { type ClientSafeProvider, getProviders, signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +16,7 @@ import {
 
 export default function SignInPage() {
   const [providers, setProviders] = useState<Record<
-    LiteralUnion<BuiltInProviderType, string>,
+    ProviderId,
     ClientSafeProvider
   > | null>(null);
 
