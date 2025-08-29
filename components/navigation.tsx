@@ -25,7 +25,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-//FIX: Create a settings page. It is not present
 export function Navigation() {
   const { data: session } = useSession();
   const { setTheme, theme } = useTheme();
@@ -37,13 +36,15 @@ export function Navigation() {
   ];
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-transparent backdrop-blur-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <FileText className="w-8 h-8 text-blue-600" />
-            <span className="text-xl font-bold text-gray-900">CoverCraft</span>
+            <span className="text-xl font-bold text-gray-900 dark:text-neutral-300">
+              CoverCraft
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -52,7 +53,7 @@ export function Navigation() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
+                className="text-gray-700 dark:text-white hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
               >
                 {item.label}
               </Link>
@@ -68,8 +69,8 @@ export function Navigation() {
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="h-9 w-9"
             >
-              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <Sun className="h-4 w-4 text-black rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-4 w-4 text-white rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
               <span className="sr-only">Toggle theme</span>
             </Button>
 

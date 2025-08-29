@@ -133,3 +133,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.gradient {
+  @apply bg-gradient-to-br from-gray-100 via-white to-gray-200 dark:from-gray-900 dark:via-gray-800 dark:to-black;
+}

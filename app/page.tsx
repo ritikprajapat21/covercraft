@@ -7,9 +7,30 @@ import { Button } from "@/components/ui/button";
 export default async function HomePage() {
   const session = await auth();
 
+  const reasons = [
+    {
+      icon: Zap,
+      title: "Lightning Fast",
+      description:
+        "Generate professional cover letters and cold emails in seconds, not hours.",
+    },
+    {
+      icon: Target,
+      title: "Highly Personalized",
+      description:
+        "AI analyzes your resume and the job description to create tailored content.",
+    },
+    {
+      icon: Users,
+      title: "Trusted by thousands",
+      description:
+        "Join thousands of job seekers who have landed interviews with our AI.",
+    },
+  ];
+
   if (!session) {
     return (
-      <section className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <section>
         {/* Hero Section */}
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 dark:from-blue-400/10 dark:to-purple-400/10" />
@@ -61,9 +82,9 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-
         {/* Features Section */}
-        <div className="py-20 bg-white dark:bg-gray-800">
+        {/* FIX: background is different from rest */}
+        <div className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -75,48 +96,25 @@ export default async function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center p-8 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 hover:shadow-lg transition-all duration-200">
-                <div className="w-16 h-16 bg-blue-600 dark:bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Zap className="w-8 h-8 text-white" />
+              {reasons.map((reason) => (
+                <div
+                  key={reason.title}
+                  className="text-center p-8 rounded-2xl bg-transparent backdrop-blur-lg border border-neutral-300 dark:bg-neutral-400/30 hover:shadow-lg transition-all duration-200 group"
+                >
+                  <div className="w-16 h-16 bg-green-600/70 group-hover:bg-green-600 dark:bg-green-500/50 dark:group-hover:bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <reason.icon className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    {reason.title}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    {reason.description}
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                  Lightning Fast
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Generate professional cover letters and cold emails in
-                  seconds, not hours.
-                </p>
-              </div>
-
-              <div className="text-center p-8 rounded-2xl bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 hover:shadow-lg transition-all duration-200">
-                <div className="w-16 h-16 bg-purple-600 dark:bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Target className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                  Highly Personalized
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  AI analyzes your resume and the job description to create
-                  tailored content.
-                </p>
-              </div>
-
-              <div className="text-center p-8 rounded-2xl bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 hover:shadow-lg transition-all duration-200">
-                <div className="w-16 h-16 bg-green-600 dark:bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Users className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                  Trusted by Thousands
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Join thousands of job seekers who have landed interviews with
-                  our AI.
-                </p>
-              </div>
+              ))}
             </div>
           </div>
         </div>
-
         {/* CTA Section */}
         <div className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-700 dark:to-purple-700">
           <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">

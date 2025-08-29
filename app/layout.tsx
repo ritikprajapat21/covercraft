@@ -35,6 +35,7 @@ export default function RootLayout({
           defaultTheme="dark"
           disableTransitionOnChange
         >
+          <div className="min-h-screen fixed inset-0 -z-10 gradient" />
           <div className="relative flex min-h-screen flex-col">
             <Navigation />
             <main className="flex-1">{children}</main>
