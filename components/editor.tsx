@@ -19,7 +19,7 @@ export function Editor({ content, onContentChange }: EditorProps) {
     try {
       await navigator.clipboard.writeText(content);
       toast.success("Content copied to clipboard!");
-    } catch (error) {
+    } catch (_error) {
       toast.error("Failed to copy content");
     }
   }, [content]);
@@ -50,11 +50,13 @@ export function Editor({ content, onContentChange }: EditorProps) {
 
   if (!content) {
     return (
-      <div className="flex items-center justify-center h-64 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+      <div className="flex items-center justify-center h-64 bg-gray-50 dark:bg-background rounded-lg border-2 border-dashed border-gray-300">
         <div className="text-center">
           <Edit3 className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-600 font-medium">No content generated yet</p>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-gray-600 dark:text-foreground font-medium">
+            No content generated yet
+          </p>
+          <p className="text-sm text-gray-500 dark:text-muted-foreground mt-1">
             Upload your resume and job description to get started
           </p>
         </div>
@@ -141,4 +143,3 @@ export function Editor({ content, onContentChange }: EditorProps) {
     </div>
   );
 }
-

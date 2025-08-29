@@ -67,11 +67,11 @@ export function FileUpload() {
   if (currentResume) {
     return (
       <div className="space-y-4">
-        <div className="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-lg">
+        <div className="flex items-center justify-between p-4 bg-green-50 dark:bg-transparent border border-green-200 rounded-lg">
           <div className="flex items-center gap-3">
             <CheckCircle className="w-5 h-5 text-green-600" />
             <div>
-              <p className="font-medium text-green-900">
+              <p className="font-medium text-green-900 dark:text-green-400">
                 {currentResume.filename}
               </p>
               <p className="text-sm text-green-700">
@@ -90,9 +90,11 @@ export function FileUpload() {
           </Button>
         </div>
 
-        <div className="p-4 bg-gray-50 rounded-lg">
-          <p className="text-sm text-gray-600 mb-2">Resume Preview:</p>
-          <p className="text-sm text-gray-800 line-clamp-3">
+        <div className="p-4 bg-gray-50 dark:bg-background rounded-lg">
+          <p className="text-sm text-gray-600 dark:text-foreground mb-2">
+            Resume Preview:
+          </p>
+          <p className="text-sm text-gray-800 dark:text-muted-foreground line-clamp-3">
             {typeof currentResume.content === "string"
               ? currentResume.content.substring(0, 200)
               : currentResume.content.text.substring(0, 200)}
