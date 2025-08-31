@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 // Updated the prompt
 export const generateCoverLetter = async (
@@ -97,8 +97,7 @@ export const generateColdEmail = async (
   const result = await model.generateContent(JSON.stringify(prompt));
   const response = result.response.text();
 
-  console.log(JSON.parse(response));
-  return JSON.parse(response).coldEmail;
+  return response;
 };
 
 export const refineContent = async (

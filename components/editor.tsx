@@ -37,11 +37,11 @@ export function Editor({ content, onContentChange }: EditorProps) {
   }, [content]);
 
   const handleDownload = useCallback(() => {
-    const blob = new Blob([content], { type: "text/plain" });
+    const blob = new Blob([content], { type: "text/pdf" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "cover-letter.txt";
+    a.download = "cover-letter.pdf";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
