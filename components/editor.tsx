@@ -1,10 +1,10 @@
 "use client";
 
+import MDEditor, { commands } from "@uiw/react-md-editor";
 import { Copy, Download, Edit3 } from "lucide-react";
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 
 interface EditorProps {
   content: string;
@@ -15,6 +15,7 @@ interface EditorProps {
 export function Editor({ content, onContentChange }: EditorProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(content);
+  console.log(content);
 
   const handleCopy = useCallback(async () => {
     try {
@@ -116,22 +117,16 @@ export function Editor({ content, onContentChange }: EditorProps) {
       </div>
 
       {/* Content Display/Editor */}
-      {isEditing ? (
-        <Textarea
-          value={editContent}
-          onChange={(e) => setEditContent(e.target.value)}
-          className="min-h-[400px] font-mono text-sm resize-none"
-          placeholder="Edit your content here..."
-        />
-      ) : (
-        <div className="bg-white border rounded-lg p-6 min-h-[400px]">
-          <div className="prose prose-sm max-w-none">
-            <pre className="whitespace-pre-wrap font-sans text-gray-800 leading-relaxed">
-              {content}
-            </pre>
-          </div>
-        </div>
-      )}
+      <MDEditor
+        value={editContent}
+        className="h-full"
+        preview="preview"
+        commands={[...commands.getCommands()]}
+        onChange={(val) => {
+          console.log(val);
+          setEditContent(val ? val : "");
+        }}
+      />
 
       {/* Content Stats */}
       <div className="flex items-center gap-4 text-xs text-gray-500 pt-2 border-t">
