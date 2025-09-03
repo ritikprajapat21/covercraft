@@ -26,6 +26,7 @@ interface AppState {
   currentDocument: Document | null;
   documents: Document[];
   isGenerating: boolean;
+  generatedContent: string | object;
 
   // Actions
   setUser: (user: User) => void;
@@ -34,6 +35,7 @@ interface AppState {
   addDocument: (document: Document) => void;
   updateDocument: (id: string, updates: Partial<Document>) => void;
   setIsGenerating: (isGenerating: boolean) => void;
+  setGeneratedContent: (content: string | object) => void;
 }
 
 export const useAppStore = create<AppState>()(
@@ -44,6 +46,7 @@ export const useAppStore = create<AppState>()(
       currentDocument: null,
       documents: [],
       isGenerating: false,
+      generatedContent: "",
 
       setUser: (user) => set({ user }),
       setCurrentResume: (resume) => set({ currentResume: resume }),
@@ -59,6 +62,8 @@ export const useAppStore = create<AppState>()(
           ),
         })),
       setIsGenerating: (isGenerating) => set({ isGenerating }),
+      setGeneratedContent: (content: string | object) =>
+        set({ generatedContent: content }),
     }),
     {
       name: "cover-letter-app",
