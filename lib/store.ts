@@ -26,7 +26,7 @@ interface AppState {
   currentDocument: Document | null;
   documents: Document[];
   isGenerating: boolean;
-  generatedContent: string | object;
+  generatedContent: string;
 
   // Actions
   setUser: (user: User) => void;
@@ -35,7 +35,7 @@ interface AppState {
   addDocument: (document: Document) => void;
   updateDocument: (id: string, updates: Partial<Document>) => void;
   setIsGenerating: (isGenerating: boolean) => void;
-  setGeneratedContent: (content: string | object) => void;
+  setGeneratedContent: (content: string) => void;
 }
 
 export const useAppStore = create<AppState>()(
@@ -62,7 +62,7 @@ export const useAppStore = create<AppState>()(
           ),
         })),
       setIsGenerating: (isGenerating) => set({ isGenerating }),
-      setGeneratedContent: (content: string | object) =>
+      setGeneratedContent: (content: string) =>
         set({ generatedContent: content }),
     }),
     {
