@@ -12,7 +12,6 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Textarea } from "./ui/textarea";
-import { useSession } from "next-auth/react";
 
 export default function JobDescription() {
   const [jobDescription, setJobDescription] = useState("");
@@ -21,7 +20,6 @@ export default function JobDescription() {
   );
   const { isGenerating, currentResume, setIsGenerating, setGeneratedContent } =
     useAppStore();
-  const session = useSession();
 
   const handleGenerate = useCallback(
     async (type: "cover-letter" | "cold-email") => {
@@ -32,11 +30,6 @@ export default function JobDescription() {
 
       if (!jobDescription.trim()) {
         toast.error("Please enter a job description");
-        return;
-      }
-
-      if (!session) {
-        toast.error("Please sign in to generate content");
         return;
       }
 
@@ -57,7 +50,7 @@ export default function JobDescription() {
         });
 
         if (!response.ok) {
-          console.log(response);
+          console.log("Response not ok", response);
           throw new Error("Failed to generate content");
         }
 
@@ -73,13 +66,7 @@ export default function JobDescription() {
         setIsGenerating(false);
       }
     },
-    [
-      currentResume,
-      jobDescription,
-      session,
-      setIsGenerating,
-      setGeneratedContent,
-    ],
+    [currentResume, jobDescription, setIsGenerating, setGeneratedContent],
   );
 
   return (
