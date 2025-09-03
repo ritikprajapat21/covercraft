@@ -5,14 +5,12 @@ import { Copy, Download, Edit3 } from "lucide-react";
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-
-interface EditorProps {
-  content: string;
-  onContentChange: (content: string) => void;
-}
+import { useAppStore } from "@/lib/store";
 
 // FEAT: Add markdown, download to pdf feature
-export function Editor({ content, onContentChange }: EditorProps) {
+export function Editor() {
+  const { generatedContent: content, setGeneratedContent: onContentChange } =
+    useAppStore();
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(content);
   console.log(content);

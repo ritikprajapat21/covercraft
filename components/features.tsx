@@ -1,13 +1,9 @@
-"use client";
-import { Crown, FileText, LoaderCircle, Mail, Sparkles } from "lucide-react";
+import { Crown, FileText } from "lucide-react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { useCallback, useState } from "react";
-import { toast } from "sonner";
-import { useAppStore } from "@/lib/store";
-import { ChatInterface } from "./chat-interface";
+import AIChat from "./ai-chat";
 import { Editor } from "./editor";
 import { FileUpload } from "./file-upload";
+import JobDescription from "./job-description";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -16,69 +12,60 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { Textarea } from "./ui/textarea";
 
 export default function Features() {
-  const { data: session } = useSession();
-  const { currentResume, isGenerating, setIsGenerating } = useAppStore();
-  const [jobDescription, setJobDescription] = useState("");
-  const [generatedContent, setGeneratedContent] = useState("");
-  const [activeType, setActiveType] = useState<"cover-letter" | "cold-email">(
-    "cover-letter",
-  );
-
-  const handleGenerate = useCallback(
-    async (type: "cover-letter" | "cold-email") => {
-      if (!currentResume) {
-        toast.error("Please upload your resume first");
-        return;
-      }
-
-      if (!jobDescription.trim()) {
-        toast.error("Please enter a job description");
-        return;
-      }
-
-      if (!session) {
-        toast.error("Please sign in to generate content");
-        return;
-      }
-
-      setIsGenerating(true);
-      setActiveType(type);
-
-      try {
-        const response = await fetch("/api/generate", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            type: type === "cover-letter" ? "cover_letter" : "cold_email",
-            jobDescription,
-            resumeContent: currentResume.content,
-          }),
-        });
-
-        if (!response.ok) {
-          console.log(response);
-          throw new Error("Failed to generate content");
-        }
-
-        const data = await response.json();
-        setGeneratedContent(data.content);
-        toast.success(
-          `${type === "cover-letter" ? "Cover letter" : "Cold email"} generated successfully!`,
-        );
-      } catch (error) {
-        toast.error("Failed to generate content. Please try again.");
-        console.error("Generation error:", error);
-      } finally {
-        setIsGenerating(false);
-      }
-    },
-    [currentResume, jobDescription, session, setIsGenerating],
-  );
+  // const handleGenerate = useCallback(
+  //   async (type: "cover-letter" | "cold-email") => {
+  //     if (!currentResume) {
+  //       toast.error("Please upload your resume first");
+  //       return;
+  //     }
+  //
+  //     if (!jobDescription.trim()) {
+  //       toast.error("Please enter a job description");
+  //       return;
+  //     }
+  //
+  //     if (!session) {
+  //       toast.error("Please sign in to generate content");
+  //       return;
+  //     }
+  //
+  //     setIsGenerating(true);
+  //     setActiveType(type);
+  //
+  //     try {
+  //       const response = await fetch("/api/generate", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           type: type === "cover-letter" ? "cover_letter" : "cold_email",
+  //           jobDescription,
+  //           resumeContent: currentResume.content,
+  //         }),
+  //       });
+  //
+  //       if (!response.ok) {
+  //         console.log(response);
+  //         throw new Error("Failed to generate content");
+  //       }
+  //
+  //       const data = await response.json();
+  //       setGeneratedContent(data.content);
+  //       toast.success(
+  //         `${type === "cover-letter" ? "Cover letter" : "Cold email"} generated successfully!`,
+  //       );
+  //     } catch (error) {
+  //       toast.error("Failed to generate content. Please try again.");
+  //       console.error("Generation error:", error);
+  //     } finally {
+  //       setIsGenerating(false);
+  //     }
+  //   },
+  //   [currentResume, jobDescription, session, setIsGenerating],
+  // );
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -111,65 +98,7 @@ export default function Features() {
               </CardContent>
             </Card>
 
-            <Card className="shadow-sm hover:shadow-md transition-shadow duration-200">
-              <CardHeader>
-                <CardTitle>Job Description</CardTitle>
-                <CardDescription>
-                  Paste the job description you're applying for
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  value={jobDescription}
-                  onChange={(e) => setJobDescription(e.target.value)}
-                  placeholder="Paste the job description here..."
-                  className="min-h-[200px] resize-none"
-                />
-              </CardContent>
-            </Card>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Button
-                onClick={() => handleGenerate("cover-letter")}
-                disabled={
-                  isGenerating || !currentResume || !jobDescription.trim()
-                }
-                className="h-12 bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 shadow-sm hover:shadow-md transition-all duration-200"
-              >
-                {isGenerating && activeType === "cover-letter" ? (
-                  <>
-                    <LoaderCircle className="w-4 h-4 mr-2 animate-spin" />
-                    Generating...
-                  </>
-                ) : (
-                  <>
-                    <FileText className="w-4 h-4 mr-2" />
-                    Generate Cover Letter
-                  </>
-                )}
-              </Button>
-
-              <Button
-                onClick={() => handleGenerate("cold-email")}
-                disabled={
-                  isGenerating || !currentResume || !jobDescription.trim()
-                }
-                variant="outline"
-                className="h-12 border-2 hover:bg-gray-50 shadow-sm hover:shadow-md transition-all duration-200"
-              >
-                {isGenerating && activeType === "cold-email" ? (
-                  <>
-                    <LoaderCircle className="w-4 h-4 mr-2 animate-spin" />
-                    Generating...
-                  </>
-                ) : (
-                  <>
-                    <Mail className="w-4 h-4 mr-2" />
-                    Generate Cold Email
-                  </>
-                )}
-              </Button>
-            </div>
+            <JobDescription />
           </div>
 
           {/* Right Column - Output */}
@@ -182,32 +111,11 @@ export default function Features() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Editor
-                  content={generatedContent}
-                  onContentChange={setGeneratedContent}
-                />
+                <Editor />
               </CardContent>
             </Card>
 
-            {generatedContent && (
-              <Card className="shadow-sm hover:shadow-md transition-shadow duration-200">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-purple-600" />
-                    AI Chat - Refine Your Content
-                  </CardTitle>
-                  <CardDescription>
-                    Ask AI to modify your content based on specific requirements
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ChatInterface
-                    currentContent={generatedContent}
-                    onContentRefine={setGeneratedContent}
-                  />
-                </CardContent>
-              </Card>
-            )}
+            <AIChat />
           </div>
         </div>
 
