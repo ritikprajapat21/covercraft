@@ -1,3 +1,5 @@
-import { Database } from "bun:sqlite";
+import { SQL } from "bun";
+import { drizzle } from "drizzle-orm/bun-sql";
 
-const bunDb = new Database("./db.sqlite", { create: true });
+const client = new SQL(process.env.DATABASE_URL || "");
+export const db = drizzle({ client });
