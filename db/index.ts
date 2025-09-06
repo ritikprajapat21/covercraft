@@ -1,5 +1,12 @@
-import { SQL } from "bun";
-import { drizzle } from "drizzle-orm/bun-sql";
+import { drizzle } from "drizzle-orm/postgres-js";
+import {
+  accounts,
+  authenticators,
+  sessions,
+  users,
+  verificationTokens,
+} from "./schema";
 
-const client = new SQL(process.env.DATABASE_URL || "");
-export const db = drizzle({ client });
+const db = drizzle(process.env.DATABASE_URL || "");
+
+export { db, users, accounts, sessions, verificationTokens, authenticators };

@@ -1,19 +1,24 @@
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
+import { accounts, db, sessions, users, verificationTokens } from "./db";
 
+// fix: save user in db
 export const { auth, handlers, signIn, signOut } = NextAuth({
+  adapter: DrizzleAdapter(db, {
+    usersTable: users,
+    accountsTable: accounts,
+    sessionsTable: sessions,
+    verificationTokensTable: verificationTokens,
+  }),
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      profile(profile) {
-        return { isPro: false, ...profile };
-      },
     }),
   ],
   callbacks: {
     jwt({ token, user }) {
-      console.log("User in jwt", user);
       if (user) {
         token.isPro = user.isPro;
       }
@@ -25,5 +30,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       }
       return session;
     },
+  },
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60,
   },
 });
