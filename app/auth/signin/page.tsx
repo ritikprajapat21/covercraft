@@ -1,11 +1,4 @@
-"use client";
-
 import { FileText } from "lucide-react";
-import { useSearchParams } from "next/navigation";
-import type { ProviderId } from "next-auth/providers/index";
-import { type ClientSafeProvider, getProviders, signIn } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,24 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import SignInButton from "./SignInButton";
 
 export default function SignInPage() {
-  const [providers, setProviders] = useState<Record<
-    ProviderId,
-    ClientSafeProvider
-  > | null>(null);
-
-  const search = useSearchParams();
-  const error = search.get("error");
-
-  useEffect(() => {
-    const fetchProviders = async () => {
-      const res = await getProviders();
-      setProviders(res);
-    };
-    fetchProviders();
-  }, []);
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
       <div className="max-w-md space-y-8 p-8">
@@ -52,25 +30,7 @@ export default function SignInPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {error && (
-              <div className="text-destructive border-l-2 border-destructive px-4 mb-4">
-                Having some trouble signin now. Try again later.
-              </div>
-            )}
-            {providers && (
-              <div className="space-y-4">
-                {Object.values(providers).map((provider) => (
-                  <Button
-                    key={provider.name}
-                    onClick={() => signIn(provider.id, { callbackUrl: "/" })}
-                    className="w-full"
-                    size="lg"
-                  >
-                    Sign in with {provider.name}
-                  </Button>
-                ))}
-              </div>
-            )}
+            <SignInButton />
           </CardContent>
         </Card>
 
