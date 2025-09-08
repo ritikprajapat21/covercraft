@@ -1,0 +1,31 @@
+services:
+  # The PostgreSQL database service
+  db:
+    image: postgres:15-alpine
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: your_strong_password
+      POSTGRES_DB: your_db_name
+    ports:
+      - "5432:5432" # Map the container's port 5432 to the host's port 5432
+
+  # The Supabase Studio service
+  studio:
+    image: supabase/studio:latest
+    restart: always
+    environment:
+      POSTGRES_HOST: db # This connects to the 'db' service defined above
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: your_strong_password
+      POSTGRES_DB: your_db_name
+    ports:
+      - "3000:3000" # Map the container's port 3000 to the host's port 3000
+    depends_on:
+      - db
+
+volumes:
+  db_data:
