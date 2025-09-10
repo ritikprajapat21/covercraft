@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useState, useCallback, useRef, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { toast } from 'sonner';
-import { Send, Bot, User, Loader2 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Bot, Loader2, Send, User } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
 
 interface ChatMessage {
   id: string;
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   content: string;
   timestamp: Date;
 }
@@ -20,16 +20,21 @@ interface ChatInterfaceProps {
   onContentRefine: (content: string) => void;
 }
 
-export function ChatInterface({ currentContent, onContentRefine }: ChatInterfaceProps) {
+export function ChatInterface({
+  currentContent,
+  onContentRefine,
+}: ChatInterfaceProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const scrollToBottom = useCallback(() => {
     if (scrollAreaRef.current) {
-      const scrollContainer = scrollAreaRef.current.querySelector('[data-radix-scroll-area-viewport]');
+      const scrollContainer = scrollAreaRef.current.querySelector(
+        "[data-radix-scroll-area-viewport]",
+      );
       if (scrollContainer) {
         scrollContainer.scrollTop = scrollContainer.scrollHeight;
       }
@@ -45,20 +50,20 @@ export function ChatInterface({ currentContent, onContentRefine }: ChatInterface
 
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
-      role: 'user',
+      role: "user",
       content: input.trim(),
       timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
-    setInput('');
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/refine', {
-        method: 'POST',
+      const response = await fetch("/api/refine", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           content: currentContent,
@@ -67,35 +72,38 @@ export function ChatInterface({ currentContent, onContentRefine }: ChatInterface
       });
 
       if (!response.ok) {
-        throw new Error('Failed to refine content');
+        throw new Error("Failed to refine content");
       }
 
       const data = await response.json();
-      
+
       const assistantMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
-        role: 'assistant',
+        role: "assistant",
         content: data.content,
         timestamp: new Date(),
       };
 
-      setMessages(prev => [...prev, assistantMessage]);
+      setMessages((prev) => [...prev, assistantMessage]);
       onContentRefine(data.content);
-      toast.success('Content refined successfully!');
+      toast.success("Content refined successfully!");
     } catch (error) {
-      toast.error('Failed to refine content. Please try again.');
-      console.error('Refinement error:', error);
+      toast.error("Failed to refine content. Please try again.");
+      console.error("Refinement error:", error);
     } finally {
       setIsLoading(false);
     }
   }, [input, isLoading, currentContent, onContentRefine]);
 
-  const handleKeyPress = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
-  }, [handleSend]);
+  const handleKeyPress = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        handleSend();
+      }
+    },
+    [handleSend],
+  );
 
   const suggestedPrompts = [
     "Make it more professional",
@@ -103,13 +111,16 @@ export function ChatInterface({ currentContent, onContentRefine }: ChatInterface
     "Make it shorter",
     "Emphasize my technical skills",
     "Add a call to action",
-    "Make it more personal"
+    "Make it more personal",
   ];
 
   return (
     <div className="space-y-4">
       {/* Chat Messages */}
-      <ScrollArea ref={scrollAreaRef} className="h-64 border rounded-lg p-4 bg-gray-50">
+      <ScrollArea
+        ref={scrollAreaRef}
+        className="h-64 border rounded-lg p-4 bg-gray-50"
+      >
         {messages.length === 0 ? (
           <div className="flex items-center justify-center h-full text-center">
             <div>
@@ -127,40 +138,46 @@ export function ChatInterface({ currentContent, onContentRefine }: ChatInterface
                 key={message.id}
                 className={cn(
                   "flex gap-3",
-                  message.role === 'user' ? 'justify-end' : 'justify-start'
+                  message.role === "user" ? "justify-end" : "justify-start",
                 )}
               >
-                {message.role === 'assistant' && (
+                {message.role === "assistant" && (
                   <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
                     <Bot className="w-4 h-4 text-white" />
                   </div>
                 )}
-                
+
                 <div
                   className={cn(
                     "max-w-[80%] rounded-lg px-4 py-2",
-                    message.role === 'user'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-white border shadow-sm'
+                    message.role === "user"
+                      ? "bg-blue-600 text-white"
+                      : "bg-white border shadow-sm",
                   )}
                 >
-                  <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-                  <p className={cn(
-                    "text-xs mt-1",
-                    message.role === 'user' ? 'text-blue-100' : 'text-gray-500'
-                  )}>
+                  <p className="text-sm whitespace-pre-wrap">
+                    {message.content}
+                  </p>
+                  <p
+                    className={cn(
+                      "text-xs mt-1",
+                      message.role === "user"
+                        ? "text-blue-100"
+                        : "text-gray-500",
+                    )}
+                  >
                     {message.timestamp.toLocaleTimeString()}
                   </p>
                 </div>
 
-                {message.role === 'user' && (
+                {message.role === "user" && (
                   <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
                     <User className="w-4 h-4 text-white" />
                   </div>
                 )}
               </div>
             ))}
-            
+
             {isLoading && (
               <div className="flex gap-3 justify-start">
                 <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
@@ -169,7 +186,9 @@ export function ChatInterface({ currentContent, onContentRefine }: ChatInterface
                 <div className="bg-white border shadow-sm rounded-lg px-4 py-2">
                   <div className="flex items-center gap-2">
                     <Loader2 className="w-4 h-4 animate-spin text-blue-600" />
-                    <span className="text-sm text-gray-600">Refining content...</span>
+                    <span className="text-sm text-gray-600">
+                      Refining content...
+                    </span>
                   </div>
                 </div>
               </div>
@@ -181,7 +200,9 @@ export function ChatInterface({ currentContent, onContentRefine }: ChatInterface
       {/* Suggested Prompts */}
       {messages.length === 0 && (
         <div className="space-y-2">
-          <p className="text-sm font-medium text-gray-700">Suggested prompts:</p>
+          <p className="text-sm font-medium text-gray-700">
+            Suggested prompts:
+          </p>
           <div className="flex flex-wrap gap-2">
             {suggestedPrompts.map((prompt) => (
               <Button
@@ -224,3 +245,4 @@ export function ChatInterface({ currentContent, onContentRefine }: ChatInterface
     </div>
   );
 }
+

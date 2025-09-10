@@ -1,10 +1,8 @@
-import { Crown, FileText } from "lucide-react";
-import Link from "next/link";
+import { FileText } from "lucide-react";
 import AIChat from "./ai-chat";
 import { Editor } from "./editor";
 import { FileUpload } from "./file-upload";
 import JobDescription from "./job-description";
-import { Button } from "./ui/button";
 import {
   Card,
   CardContent,
@@ -67,26 +65,26 @@ export default function Features() {
         </div>
 
         {/* Premium Features Banner */}
-        <div className="mt-12 bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-700 dark:to-blue-700 rounded-2xl p-8 text-white shadow-xl">
-          <div className="text-center">
-            <Crown className="w-12 h-12 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold mb-2">Unlock Premium Features</h3>
-            <p className="text-lg mb-6 opacity-90">
-              Send emails directly from Gmail, download PDFs, and get unlimited
-              generations
-            </p>
-            <Link href="/pricing">
-              <Button
-                variant="secondary"
-                size="lg"
-                className="bg-white dark:bg-gray-100 text-purple-600 dark:text-purple-700 hover:bg-gray-50 dark:hover:bg-gray-200 shadow-lg hover:shadow-xl transition-all duration-200"
-              >
-                <Crown className="w-4 h-4 mr-2" />
-                Upgrade to Pro
-              </Button>
-            </Link>
-          </div>
-        </div>
+        {/* <div className="mt-12 bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-700 dark:to-blue-700 rounded-2xl p-8 text-white shadow-xl"> */}
+        {/*   <div className="text-center"> */}
+        {/*     <Crown className="w-12 h-12 mx-auto mb-4" /> */}
+        {/*     <h3 className="text-2xl font-bold mb-2">Unlock Premium Features</h3> */}
+        {/*     <p className="text-lg mb-6 opacity-90"> */}
+        {/*       Send emails directly from Gmail, download PDFs, and get unlimited */}
+        {/*       generations */}
+        {/*     </p> */}
+        {/*     <Link href="/pricing"> */}
+        {/*       <Button */}
+        {/*         variant="secondary" */}
+        {/*         size="lg" */}
+        {/*         className="bg-white dark:bg-gray-100 text-purple-600 dark:text-purple-700 hover:bg-gray-50 dark:hover:bg-gray-200 shadow-lg hover:shadow-xl transition-all duration-200" */}
+        {/*       > */}
+        {/*         <Crown className="w-4 h-4 mr-2" /> */}
+        {/*         Upgrade to Pro */}
+        {/*       </Button> */}
+        {/*     </Link> */}
+        {/*   </div> */}
+        {/* </div> */}
       </div>
     </section>
   );

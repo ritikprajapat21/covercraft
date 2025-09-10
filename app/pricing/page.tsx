@@ -1,6 +1,14 @@
-"use client";
-
 import { Check, Star } from "lucide-react";
+import Link from "next/link";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -102,13 +110,41 @@ export default function PricingPage() {
               </CardHeader>
 
               <CardContent className="pt-6">
-                <Button
-                  className={`w-full mb-6 ${plan.popular ? "bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600" : ""}`}
-                  variant={plan.buttonVariant}
-                  size="lg"
-                >
-                  {plan.buttonText}
-                </Button>
+                {plan.popular ? (
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        className={`w-full mb-6 ${plan.popular ? "bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600" : ""}`}
+                        variant={plan.buttonVariant}
+                        size="lg"
+                      >
+                        {plan.buttonText}
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogTitle>Congratulations!!</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        You are a lucky winner. You got a chance to use
+                        CoverCraft for free.
+                      </AlertDialogDescription>
+                      <AlertDialogFooter>
+                        <AlertDialogAction asChild>
+                          <Link href="/auth/signin">Continue</Link>
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                ) : (
+                  <Link href="/auth/signin">
+                    <Button
+                      className={`w-full mb-6 ${plan.popular ? "bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600" : ""}`}
+                      variant={plan.buttonVariant}
+                      size="lg"
+                    >
+                      {plan.buttonText}
+                    </Button>
+                  </Link>
+                )}
 
                 <ul className="space-y-3">
                   {plan.features.map((feature) => (
