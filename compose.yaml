@@ -3,6 +3,7 @@ services:
   db:
     image: postgres:17-alpine
     restart: always
+    hostname: postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -15,6 +16,7 @@ services:
   adminer:
     image: adminer
     restart: always
+    hostname: adminer
     ports:
       - 8080:8080
 
