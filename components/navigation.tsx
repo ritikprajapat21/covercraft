@@ -31,7 +31,6 @@ export function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const setUser = useAppStore((s) => s.setUser);
   const user = useAppStore((s) => s.user);
-  console.log("From navigation", session);
 
   useEffect(() => {
     if (session?.user) {
