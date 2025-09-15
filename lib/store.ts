@@ -5,7 +5,7 @@ import { persist } from "zustand/middleware";
 interface Resume {
   id: string;
   filename: string;
-  content: string | { text: string; links: string[] };
+  content: { text: string; links: string[] };
   uploadedAt: Date;
 }
 

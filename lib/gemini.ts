@@ -5,7 +5,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 // Updated the prompt
 export const generateCoverLetter = async (
   jobDescription: string,
-  resumeContent: string | { text: string; links: string[] },
+  resumeContent: { text: string; links: string[] },
 ) => {
   const model = genAI.getGenerativeModel({
     model: "gemini-2.5-flash",
@@ -60,7 +60,7 @@ export const generateCoverLetter = async (
 
 export const generateColdEmail = async (
   companyDescription: string,
-  resumeContent: string | { text: string; links: string[] },
+  resumeContent: { text: string; links: string[] },
 ) => {
   const model = genAI.getGenerativeModel({
     model: "gemini-2.5-flash",

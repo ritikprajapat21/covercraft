@@ -44,17 +44,12 @@ export const extractTextFromDOCX = async (file: File): Promise<string> => {
 
 export const extractTextFromFile = async (
   file: File,
-): Promise<string | { text: string; links: string[] }> => {
+): Promise<{ text: string; links: string[] }> => {
   const fileType = file.type;
 
   if (fileType === "application/pdf") {
     return await extractTextFromPDF(file);
-  } else if (
-    fileType ===
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-  ) {
-    return await extractTextFromDOCX(file);
   } else {
-    throw new Error("Unsupported file type. Please upload a PDF or DOCX file.");
+    throw new Error("Unsupported file type. Please upload a PDF file.");
   }
 };

@@ -26,7 +26,7 @@ export default function Features() {
         </div>
 
         <div className="space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <Card className="shadow-sm hover:shadow-md transition-shadow duration-200 h-fit self-center">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
