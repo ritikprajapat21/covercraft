@@ -2,7 +2,7 @@
 
 import MDEditor, { commands } from "@uiw/react-md-editor";
 import { Copy, Download, Edit3 } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useAppStore } from "@/lib/store";
@@ -13,7 +13,10 @@ export function Editor() {
     useAppStore();
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(content);
-  console.log(content);
+
+  useEffect(() => {
+    setEditContent(content);
+  }, [content]);
 
   const handleCopy = useCallback(async () => {
     try {

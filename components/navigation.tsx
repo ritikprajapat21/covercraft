@@ -13,7 +13,7 @@ import {
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,14 +29,7 @@ export function Navigation() {
   const { data: session } = useSession();
   const { setTheme, theme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const setUser = useAppStore((s) => s.setUser);
   const user = useAppStore((s) => s.user);
-
-  useEffect(() => {
-    if (session?.user) {
-      setUser(session.user);
-    }
-  }, [session?.user, setUser]);
 
   const navItems = [
     { href: "/", label: "Home" },

@@ -48,6 +48,7 @@ export const generateCoverLetter = async (
       "Be specific and show proof (metrics, technologies, outcomes).",
       "Keep it concise: 3–4 paragraphs max.",
       "Response should contain the fully formatted cover letter in markdown with the links.",
+      "If their are links/strings/lines that should be on next line then end them with 2 space at back."
     ],
   };
 
