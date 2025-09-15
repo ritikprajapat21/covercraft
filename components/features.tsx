@@ -25,10 +25,9 @@ export default function Features() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left Column - Input */}
-          <div className="space-y-6">
-            <Card className="shadow-sm hover:shadow-md transition-shadow duration-200">
+        <div className="space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card className="shadow-sm hover:shadow-md transition-shadow duration-200 h-fit self-center">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
@@ -46,7 +45,6 @@ export default function Features() {
             <JobDescription />
           </div>
 
-          {/* Right Column - Output */}
           <div className="space-y-6">
             <Card className="shadow-sm hover:shadow-md transition-shadow duration-200">
               <CardHeader>

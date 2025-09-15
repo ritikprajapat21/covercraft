@@ -119,7 +119,7 @@ export function ChatInterface({
       {/* Chat Messages */}
       <ScrollArea
         ref={scrollAreaRef}
-        className="h-64 border rounded-lg p-4 bg-gray-50"
+        className="h-64 border rounded-lg p-4 bg-background"
       >
         {messages.length === 0 ? (
           <div className="flex items-center justify-center h-full text-center">

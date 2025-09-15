@@ -62,7 +62,6 @@ export function FileUpload() {
     setUploadError(null);
     toast.success("Resume removed");
   };
-  console.log(currentResume);
 
   if (currentResume) {
     return (
@@ -113,7 +112,7 @@ export function FileUpload() {
           "border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-all duration-200",
           isDragActive
             ? "border-blue-500 bg-blue-50"
-            : "border-gray-300 hover:border-gray-400 hover:bg-gray-50",
+            : "border-gray-300 hover:border-gray-400 hover:bg-background/60",
           isUploading && "pointer-events-none opacity-50",
         )}
       >
@@ -129,7 +128,7 @@ export function FileUpload() {
             <>
               <Upload className="w-12 h-12 text-gray-400" />
               <div>
-                <p className="text-lg font-medium text-gray-900 mb-1">
+                <p className="text-lg font-medium text-foreground mb-1">
                   {isDragActive
                     ? "Drop your resume here"
                     : "Upload your resume"}
