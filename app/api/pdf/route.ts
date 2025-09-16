@@ -31,10 +31,9 @@ export async function POST(req: NextRequest) {
   `;
 
   try {
-    console.log(await chromium.executablePath("/tmp"));
     const browser = await puppeteer.launch({
       args: chromium.args,
-      executablePath: await chromium.executablePath("/tmp/"),
+      executablePath: await chromium.executablePath(),
       headless: "shell",
     });
 
