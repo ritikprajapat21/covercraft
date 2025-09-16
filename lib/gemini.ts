@@ -43,12 +43,30 @@ export const generateCoverLetter = async (
       },
     },
     instructions: [
-      "Map job requirements from job_description to skills/experience in resume.",
-      "Each body paragraph should emphasize one or two key skills or achievements.",
-      "Be specific and show proof (metrics, technologies, outcomes).",
-      "Keep it concise: 3–4 paragraphs max.",
-      "Response should contain the fully formatted cover letter in markdown with the links.",
-      "If their are links/strings/lines that should be on next line then end them with 2 space at back."
+      `
+        You are an AI writing assistant helping users generate personalized and concise cover letters for job applications.
+        Use the resume and job description to craft a compelling narrative tailored to the role. Follow the structure below:
+
+        1. Match Skills to Role
+        - Carefully analyze the job description and map its key requirements to the candidate's skills and experience.
+        - Focus on relevance and alignment between the candidate's background and the company's needs.
+
+        2. Body Paragraph Structure
+        - Each body paragraph should highlight one or two specific skills, achievements, or experiences.
+        - Emphasize outcomes, metrics, and technologies where possible (e.g., “Increased X by Y%”, “Led a team of 5 engineers”, “Built using React and Node.js”).
+
+        3. Tone and Brevity
+        - Keep the tone professional yet approachable.
+        - Limit the cover letter to 3–4 concise paragraphs (around 180–250 words).
+
+        4. Formatting Instructions
+        - Format the output as a markdown-formatted cover letter.
+        - Use proper paragraph breaks.
+        - If a line or string should appear on the next line, end it with two spaces.
+        - Include relevant links as clickable markdown links (e.g., [My Portfolio](https://example.com)).
+
+        Only output the fully formatted markdown cover letter — no explanations or extra content.
+      `,
     ],
   };
 
@@ -56,7 +74,6 @@ export const generateCoverLetter = async (
   const response = result.response.text();
 
   return response;
-  // return JSON.parse(response).coverLetter;
 };
 
 export const generateColdEmail = async (
@@ -85,13 +102,33 @@ export const generateColdEmail = async (
       },
     },
     instructions: [
-      "Generate a compelling subject line tied to the company/industry.",
-      "Start with a personalized hook that shows awareness of the company.",
-      "Highlight 1–2 achievements or skills from resume relevant to the company.",
-      "Keep it concise: 120–180 words total.",
-      "End with a clear call to action (suggest a quick intro call, sharing portfolio, etc.).",
-      "Response should contain the fully formatted email in markdown with the links.",
-      "Response should contain Subject line that can be copied and content that can be copied separately.",
+      `
+        You are an AI writing assistant helping users generate concise and personalized cold outreach emails for job applications.  
+        Use the following structure to generate the email in markdown format:
+
+        1. Subject Line
+        - Create a compelling subject line tailored to the target company's name, role, or industry.
+        - Make it personalized, relevant, and curiosity-driven.
+
+        2. Personalized Opening Hook
+        - Start the email with a line that shows genuine interest or awareness of the company’s work, product, or recent news.
+        - Mention the company name directly.
+
+        3. Resume Tie-In  
+        - Briefly highlight 1–2 achievements, skills, or experiences from the candidate’s resume that are most relevant to the company or role.
+        - Focus on how these align with the company’s goals or challenges.
+
+        4. Clear Call to Action
+        - Close with a friendly and professional call to action, such as scheduling a quick intro call, reviewing a portfolio, or continuing the conversation.
+        - Keep tone warm, not pushy.
+
+        5. Formatting Rules
+        - Keep total length between 120–180 words.
+        - Format the output as a markdown email.
+        - Add two spaces at the end of lines where a line break is desired.
+        - Include relevant links (portfolio, LinkedIn, etc.) as clickable markdown links (e.g., [My Portfolio](https://example.com)).
+        The final response should only contain the fully formatted markdown email, nothing else.
+      `,
     ],
   };
 
@@ -164,87 +201,3 @@ export const refineContent = async (
     diff?: string;
   };
 };
-
-// export const generateCoverLetter = async (
-//   jobDescription: string,
-//   resumeContent: string,
-// ) => {
-//   const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-//
-//   const prompt = `
-//     Based on the following resume and job description, create a personalized, professional cover letter.
-//
-//     Resume:
-//     ${resumeContent}
-//
-//     Job Description:
-//     ${jobDescription}
-//
-//     Please create a cover letter that:
-//     1. Addresses the specific requirements mentioned in the job description
-//     2. Highlights relevant experience and skills from the resume
-//     3. Shows genuine interest in the role and company
-//     4. Maintains a professional yet personable tone
-//     5. Is concise and impactful (3-4 paragraphs)
-//
-//     Format the response as a complete cover letter with proper structure.
-//   `;
-//
-//   const result = await model.generateContent(prompt);
-//   const response = await result.response;
-//   return response.text();
-// };
-
-// export const generateColdEmail = async (
-//   jobDescription: string,
-//   resumeContent: string,
-// ) => {
-//   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-//
-//   const prompt = `
-//     Based on the following resume and job description, create a personalized cold email to reach out about this opportunity.
-//
-//     Resume:
-//     ${resumeContent}
-//
-//     Job Description:
-//     ${jobDescription}
-//
-//     Please create a cold email that:
-//     1. Has a compelling subject line
-//     2. Briefly introduces the candidate
-//     3. Highlights 2-3 most relevant qualifications
-//     4. Shows knowledge of the company/role
-//     5. Includes a clear call to action
-//     6. Is concise and professional (4-5 sentences max)
-//
-//     Format the response with:
-//     Subject: [subject line]
-//     Body: [email body]
-//   `;
-//
-//   const result = await model.generateContent(prompt);
-//   const response = await result.response;
-//   return response.text();
-// };
-//
-// export const refineContent = async (content: string, userRequest: string) => {
-//   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-//
-//   const prompt = `
-//     Please modify the following content based on the user's request:
-//
-//     Current Content:
-//     ${content}
-//
-//     User Request:
-//     ${userRequest}
-//
-//     Please provide the refined version while maintaining the professional tone and structure.
-//   `;
-//
-//   const result = await model.generateContent(prompt);
-//   const response = await result.response;
-//   return response.text();
-// };
-//

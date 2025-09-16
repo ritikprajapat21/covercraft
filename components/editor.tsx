@@ -154,9 +154,7 @@ export function Editor() {
         <span>
           Words: {content.split(/\s+/).filter((word) => word.length > 0).length}
         </span>
-        <span>Lines: {content.split("\n").length}</span>
       </div>
     </div>
   );
 }
-
