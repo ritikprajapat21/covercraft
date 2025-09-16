@@ -2,15 +2,18 @@
 
 import { SessionProvider, useSession } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
+import { useEffect } from "react";
 import { useAppStore } from "@/lib/store";
 
 function Auth({ children }: { children: React.ReactNode }) {
   const session = useSession();
   const setUser = useAppStore((s) => s.setUser);
 
-  if (session.status === "authenticated") {
-    setUser(session.data.user);
-  }
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      setUser(session.data.user);
+    }
+  }, [session, setUser]);
 
   return <main>{children}</main>;
 }

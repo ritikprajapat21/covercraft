@@ -47,25 +47,26 @@ export async function POST(req: NextRequest) {
 
     await browser.close();
 
-    const headers = new Headers();
-    headers.append(
-      "Content-Disposition",
-      'attachment; filename="document.pdf"',
-    );
-    headers.append("Content-Type", "application/pdf");
+    const stream = new ReadableStream({
+      start(controller) {
+        controller.enqueue(pdfBuffer);
+        controller.close();
+      },
+    });
 
-    return new NextResponse(pdfBuffer, {
+    const headers = new Headers();
+    headers.append("Content-Disposition", 'inline; filename="document.pdf"');
+    headers.append("Content-Type", "application/pdf");
+    headers.append("Content-Length", pdfBuffer.length.toString());
+
+    return new NextResponse(stream, {
       headers,
     });
-    // res.setHeader("Content-Type", "application/pdf");
-    // res.setHeader("Content-Disposition", "attachment; filename=download.pdf");
-    // res.send(pdfBuffer);
   } catch (error) {
     console.error("PDF generation failed:", error);
     return NextResponse.json(
       { error: "Failed to generate PDF" },
       { status: 500 },
     );
-    // res.status(500).json({ error: "Failed to generate PDF" });
   }
 }
