@@ -1,9 +1,9 @@
-// pages/api/generate-pdf.ts
-
 import chromium from "@sparticuz/chromium";
 import { marked } from "marked";
 import { type NextRequest, NextResponse } from "next/server";
 import puppeteer from "puppeteer-core";
+
+chromium.setGraphicsMode = false;
 
 export async function POST(req: NextRequest) {
   const { content } = await req.json();
@@ -31,9 +31,10 @@ export async function POST(req: NextRequest) {
   `;
 
   try {
+    const path = await chromium.executablePath();
     const browser = await puppeteer.launch({
       args: chromium.args,
-      executablePath: await chromium.executablePath(),
+      executablePath: path,
       headless: true,
     });
 
@@ -64,6 +65,8 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error("PDF generation failed:", error);
+    console.error("process.platform:", process.platform);
+    console.error("process.arch:", process.arch);
     return NextResponse.json({ error: error }, { status: 500 });
   }
 }

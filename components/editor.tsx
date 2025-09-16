@@ -4,7 +4,6 @@ import MDEditor from "@uiw/react-md-editor";
 import { Copy, Download, Edit3 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-
 import { Button } from "@/components/ui/button";
 import { useAppStore } from "@/lib/store";
 
@@ -62,7 +61,7 @@ export function Editor() {
     link.click();
 
     window.URL.revokeObjectURL(url);
-  }, [content, user?.name]);
+  }, [user?.name, content]);
 
   if (!content) {
     return (

@@ -6,23 +6,23 @@ export const generateCoverLetter = async (
   jobDescription: string,
   resumeContent: { text: string; links: string[] },
 ) => {
-  const model = genAI.getGenerativeModel({
-    model: "gemini-2.5-flash",
-    // May need in future so commenting it
-    // generationConfig: {
-    //   responseMimeType: "application/json",
-    //   responseSchema: {
-    //     type: SchemaType.OBJECT,
-    //     properties: {
-    //       coverLetter: {
-    //         type: SchemaType.STRING,
-    //         description: "The generated cover letter in markdown format.",
-    //       },
-    //     },
-    //     required: ["coverLetter"],
-    //   },
-    // },
-  });
+  // const model = genAI.getGenerativeModel({
+  //   model: "gemini-2.5-flash",
+  //   // May need in future so commenting it
+  //   // generationConfig: {
+  //   //   responseMimeType: "application/json",
+  //   //   responseSchema: {
+  //   //     type: SchemaType.OBJECT,
+  //   //     properties: {
+  //   //       coverLetter: {
+  //   //         type: SchemaType.STRING,
+  //   //         description: "The generated cover letter in markdown format.",
+  //   //       },
+  //   //     },
+  //   //     required: ["coverLetter"],
+  //   //   },
+  //   // },
+  // });
 
   const prompt = {
     task: "job_outreach_writer",
@@ -69,10 +69,27 @@ export const generateCoverLetter = async (
     ],
   };
 
-  const result = await model.generateContent(JSON.stringify(prompt));
-  const response = result.response.text();
+  return `
+September 16, 2025
 
-  return response;
+Ritik Prajapat  
+ritikprajapati084@gmail.com  
++91 9754892367  
+[GitHub](https://github.com/ritikprajapat21) | [LinkedIn](https://www.linkedin.com/in/ritik-prajapat/) | [Portfolio](https://ritikprajapat-portfolio.vercel.app/)
+
+Dear Hiring Team,
+
+I am writing to express my enthusiastic interest in the Engineer position on the Client Identities team at Goldman Sachs. My background as a detail-oriented Computer Science graduate with strong interests in secure web development, software architecture, and full-stack contribution aligns perfectly with your team's mission to design and implement secure, seamless sign-in experiences. I am eager to apply my skills in an agile, client-driven environment to build resilient, scalable solutions.
+
+During my Web Developer Internship at RezuWizard, I gained hands-on experience in enterprise-level application development, specifically by engineering secure authentication and authorization flows with backend APIs, which notably improved onboarding speed by 40%. My proficiency in compiled languages like Java, alongside extensive experience in developing RESTful APIs and full-stack applications with frameworks like Spring Boot and Node.js, directly addresses your requirements for building robust and secure software.
+
+My project work further demonstrates my capabilities in critical areas, including the implementation of Google [OAuth 2.0](https://github.com/ritikprajapat21/email-summarizer) for secure email access in my Email Summarizer project and leveraging [Clerk](https://github.com/ritikprajapat21/tune-in) for user authentication in my Podcast Generator. This experience directly relates to your focus on modern web security protocols. Furthermore, my understanding of containerization with Docker and scripting skills in Python, evidenced by my contributions to projects like SurfSense, would enable me to contribute effectively to systems integrating cloud-native offerings and custom products.
+
+I am confident in my ability to contribute across the stack and help promote best practices for secure application development within the firm. I am passionate about continuous growth and building mission-critical systems, and I am particularly drawn to Goldman Sachs' commitment to fostering diversity and professional development. Thank you for considering my application; I look forward to discussing how my skills and enthusiasm can benefit your team.`;
+  // const result = await model.generateContent(JSON.stringify(prompt));
+  // const response = result.response.text();
+  //
+  // return response;
 };
 
 export const generateColdEmail = async (
