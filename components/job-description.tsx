@@ -73,7 +73,7 @@ export default function JobDescription() {
           value={jobDescription}
           onChange={(e) => setJobDescription(e.target.value)}
           placeholder="Paste the job description here..."
-          className="min-h-[200px] resize-none"
+          className="h-[200px] resize-none"
           required
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">

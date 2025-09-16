@@ -2,7 +2,6 @@ import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
-// Updated the prompt
 export const generateCoverLetter = async (
   jobDescription: string,
   resumeContent: { text: string; links: string[] },

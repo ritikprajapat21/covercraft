@@ -31,9 +31,10 @@ export async function POST(req: NextRequest) {
   `;
 
   try {
+    console.log(await chromium.executablePath("/tmp"));
     const browser = await puppeteer.launch({
       args: chromium.args,
-      executablePath: await chromium.executablePath(),
+      executablePath: await chromium.executablePath("/tmp/"),
       headless: "shell",
     });
 
@@ -64,9 +65,6 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error("PDF generation failed:", error);
-    return NextResponse.json(
-      { error: "Failed to generate PDF" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: error }, { status: 500 });
   }
 }
