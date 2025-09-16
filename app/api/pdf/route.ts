@@ -1,9 +1,19 @@
+import fs from "node:fs";
 import chromium from "@sparticuz/chromium";
 import { marked } from "marked";
 import { type NextRequest, NextResponse } from "next/server";
 import puppeteer from "puppeteer-core";
 
 chromium.setGraphicsMode = false;
+
+function listDir(dir: string) {
+  try {
+    const files = fs.readdirSync(dir);
+    console.error(`Contents of ${dir}:`, files);
+  } catch (err) {
+    console.error(`Error reading ${dir}:`, err);
+  }
+}
 
 export async function POST(req: NextRequest) {
   const { content } = await req.json();
@@ -67,6 +77,11 @@ export async function POST(req: NextRequest) {
     console.error("PDF generation failed:", error);
     console.error("process.platform:", process.platform);
     console.error("process.arch:", process.arch);
+    listDir("/tmp");
+    listDir("/var/task");
+    listDir("/var/task/node_modules/@sparticuz/chromium");
+    listDir("/var/task/node_modules/@sparticuz/chromium/bin");
+
     return NextResponse.json({ error: error }, { status: 500 });
   }
 }
