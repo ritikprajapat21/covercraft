@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
       <head>
         <meta charset="utf-8" />
         <style>
-          body { font-family: Arial, sans-serif; padding: 40px; }
+          body { font-family: "Times", Arial, sans-serif; padding: 40px; }
           h1, h2, h3 { color: #333; }
         </style>
       </head>
