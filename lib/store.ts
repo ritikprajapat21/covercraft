@@ -29,7 +29,7 @@ interface AppState {
   generatedContent: string;
 
   // Actions
-  setUser: (user: User) => void;
+  setUser: (user: User | null) => void;
   setCurrentResume: (resume: Resume | null) => void;
   setCurrentDocument: (document: Document | null) => void;
   addDocument: (document: Document) => void;

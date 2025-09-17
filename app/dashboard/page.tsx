@@ -2,7 +2,6 @@
 
 import { Clock, Crown, FileText, Mail, Plus } from "lucide-react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useAppStore } from "@/lib/store";
 
 interface Document {
   id: string;
@@ -25,7 +25,7 @@ interface Document {
 }
 
 export default function DashboardPage() {
-  const { data: session } = useSession();
+  const user = useAppStore((s) => s.user);
   const [documents, setDocuments] = useState<Document[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -56,7 +56,7 @@ export default function DashboardPage() {
     setIsLoading(false);
   }, []);
 
-  if (!session) {
+  if (!user) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">

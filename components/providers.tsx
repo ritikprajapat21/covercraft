@@ -12,6 +12,8 @@ function Auth({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (session.status === "authenticated") {
       setUser(session.data.user);
+    } else {
+      setUser(null);
     }
   }, [session, setUser]);
 

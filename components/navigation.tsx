@@ -11,7 +11,7 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -26,7 +26,7 @@ import {
 import { useAppStore } from "@/lib/store";
 
 export function Navigation() {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const { setTheme, theme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const user = useAppStore((s) => s.user);
@@ -75,7 +75,7 @@ export function Navigation() {
               <span className="sr-only">Toggle theme</span>
             </Button>
 
-            {session ? (
+            {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -84,11 +84,11 @@ export function Navigation() {
                   >
                     <Avatar className="h-8 w-8">
                       <AvatarImage
-                        src={session.user?.image || ""}
-                        alt={session.user?.name || ""}
+                        src={user?.image || ""}
+                        alt={user?.name || ""}
                       />
                       <AvatarFallback>
-                        {session.user?.name?.charAt(0) || "U"}
+                        {user?.name?.charAt(0) || "U"}
                       </AvatarFallback>
                     </Avatar>
                   </Button>
