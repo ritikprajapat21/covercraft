@@ -69,7 +69,7 @@ export const generateCoverLetter = async (
     ],
   };
 
-  if (process.env.VERCEL === "1") {
+  if (process.env.VERCEL !== "1") {
     return `
 September 16, 2025
 

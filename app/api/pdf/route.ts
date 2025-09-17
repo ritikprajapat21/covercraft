@@ -41,7 +41,10 @@ export async function POST(req: NextRequest) {
   `;
 
   try {
-    const path = await chromium.executablePath();
+    const path =
+      process.env.VERCEL === "1"
+        ? "/var/task/lib/bin"
+        : await chromium.executablePath();
     const browser = await puppeteer.launch({
       args: chromium.args,
       executablePath: path,
@@ -80,7 +83,7 @@ export async function POST(req: NextRequest) {
     listDir("/tmp");
     listDir("/var/task");
     listDir("/var/task/node_modules/@sparticuz/chromium");
-    listDir("/var/task/node_modules/@sparticuz/chromium/bin");
+    listDir("/opt");
 
     return NextResponse.json({ error: error }, { status: 500 });
   }
