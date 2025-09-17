@@ -6,23 +6,23 @@ export const generateCoverLetter = async (
   jobDescription: string,
   resumeContent: { text: string; links: string[] },
 ) => {
-  // const model = genAI.getGenerativeModel({
-  //   model: "gemini-2.5-flash",
-  //   // May need in future so commenting it
-  //   // generationConfig: {
-  //   //   responseMimeType: "application/json",
-  //   //   responseSchema: {
-  //   //     type: SchemaType.OBJECT,
-  //   //     properties: {
-  //   //       coverLetter: {
-  //   //         type: SchemaType.STRING,
-  //   //         description: "The generated cover letter in markdown format.",
-  //   //       },
-  //   //     },
-  //   //     required: ["coverLetter"],
-  //   //   },
-  //   // },
-  // });
+  const model = genAI.getGenerativeModel({
+    model: "gemini-2.5-flash",
+    // May need in future so commenting it
+    // generationConfig: {
+    //   responseMimeType: "application/json",
+    //   responseSchema: {
+    //     type: SchemaType.OBJECT,
+    //     properties: {
+    //       coverLetter: {
+    //         type: SchemaType.STRING,
+    //         description: "The generated cover letter in markdown format.",
+    //       },
+    //     },
+    //     required: ["coverLetter"],
+    //   },
+    // },
+  });
 
   const prompt = {
     task: "job_outreach_writer",
@@ -69,7 +69,8 @@ export const generateCoverLetter = async (
     ],
   };
 
-  return `
+  if (process.env.VERCEL === "1") {
+    return `
 September 16, 2025
 
 Ritik Prajapat  
@@ -86,10 +87,12 @@ During my Web Developer Internship at RezuWizard, I gained hands-on experience i
 My project work further demonstrates my capabilities in critical areas, including the implementation of Google [OAuth 2.0](https://github.com/ritikprajapat21/email-summarizer) for secure email access in my Email Summarizer project and leveraging [Clerk](https://github.com/ritikprajapat21/tune-in) for user authentication in my Podcast Generator. This experience directly relates to your focus on modern web security protocols. Furthermore, my understanding of containerization with Docker and scripting skills in Python, evidenced by my contributions to projects like SurfSense, would enable me to contribute effectively to systems integrating cloud-native offerings and custom products.
 
 I am confident in my ability to contribute across the stack and help promote best practices for secure application development within the firm. I am passionate about continuous growth and building mission-critical systems, and I am particularly drawn to Goldman Sachs' commitment to fostering diversity and professional development. Thank you for considering my application; I look forward to discussing how my skills and enthusiasm can benefit your team.`;
-  // const result = await model.generateContent(JSON.stringify(prompt));
-  // const response = result.response.text();
-  //
-  // return response;
+  }
+
+  const result = await model.generateContent(JSON.stringify(prompt));
+  const response = result.response.text();
+
+  return response;
 };
 
 export const generateColdEmail = async (
