@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
   try {
     const path =
       process.env.VERCEL === "1"
-        ? "/var/task/lib/bin"
+        ? "/var/task/bin"
         : await chromium.executablePath();
     const browser = await puppeteer.launch({
       args: chromium.args,
